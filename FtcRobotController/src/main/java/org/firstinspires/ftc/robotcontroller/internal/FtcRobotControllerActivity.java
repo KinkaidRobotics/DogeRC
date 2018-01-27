@@ -78,6 +78,7 @@ import com.qualcomm.ftccommon.configuration.FtcLoadFileActivity;
 import com.qualcomm.ftccommon.configuration.RobotConfigFile;
 import com.qualcomm.ftccommon.configuration.RobotConfigFileManager;
 import com.qualcomm.ftcrobotcontroller.BuildConfig;
+import com.qualcomm.ftcrobotcontroller.FieldPositionActivity;
 import com.qualcomm.ftcrobotcontroller.R;
 import com.qualcomm.hardware.HardwareFactory;
 import com.qualcomm.robotcore.eventloop.EventLoopManager;
@@ -127,6 +128,7 @@ public class FtcRobotControllerActivity extends Activity {
 
     private static final int REQUEST_CONFIG_WIFI_CHANNEL = 1;
     private static final int NUM_GAMEPADS = 2;
+    private static final int FIELD_POSITION_CODE = 415;
 
     protected WifiManager.WifiLock wifiLock;
     protected RobotConfigFileManager cfgFileMgr;
@@ -304,8 +306,8 @@ public class FtcRobotControllerActivity extends Activity {
         textGamepad[1] = (TextView) findViewById(R.id.textGamepad2);
 
         if(BuildConfig.IS_OPENRC) {
-            textOpenRCVersion = (TextView) findViewById(R.id.openrc_version);
-            textOpenRCVersion.setText(org.openftc.rc.BuildConfig.VERSION_COMPLETE);
+            //textOpenRCVersion = (TextView) findViewById(R.id.openrc_version);
+            //textOpenRCVersion.setText(org.openftc.rc.BuildConfig.VERSION_COMPLETE);
         }
 
         immersion = new ImmersiveMode(getWindow().getDecorView());
@@ -540,6 +542,12 @@ public class FtcRobotControllerActivity extends Activity {
             intent.putExtra(LaunchActivityConstantsList.ABOUT_ACTIVITY_CONNECTION_TYPE, networkType);
             startActivity(intent);
             return true;
+        }
+        else if (id == R.id.action_field) {
+            Intent intent = new Intent(AppUtil.getDefContext(),  FieldPositionActivity.class);
+            startActivityForResult(intent, FIELD_POSITION_CODE);
+            return true;
+    
         } else if (id == R.id.action_exit_app) {
             finish();
             return true;
