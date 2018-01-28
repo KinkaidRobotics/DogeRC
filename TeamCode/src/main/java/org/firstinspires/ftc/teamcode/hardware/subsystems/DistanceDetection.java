@@ -33,7 +33,9 @@ public class DistanceDetection {
         if(lastDistance == -1){
             lastDistance = dis;
         }
-
+        if(dis < 20){
+            return lastDistance;
+        }
         if(Math.abs(lastDistance - dis) > 5){
             if(errorCount >= 3 ){
                 errorCount = 0;

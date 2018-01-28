@@ -2,8 +2,6 @@ package org.firstinspires.ftc.teamcode.auto;
 
 import com.disnodeteam.dogecv.CameraViewDisplay;
 import com.disnodeteam.dogecv.detectors.JewelDetector;
-import com.qualcomm.robotcore.hardware.HardwareMap;
-import com.qualcomm.robotcore.robocol.Command;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.navigation.RelicRecoveryVuMark;
@@ -21,8 +19,8 @@ import org.firstinspires.ftc.teamcode.lib.auto.DogeAutoOpMode;
  * Created by Victo on 1/20/2018.
  */
 
-public class AutoRedBottom extends DogeAuto {
-    public AutoRedBottom(DogeAutoOpMode parent) {
+public class AutoRedTop extends DogeAuto {
+    public AutoRedTop(DogeAutoOpMode parent) {
         super(parent);
     }
 
@@ -84,43 +82,34 @@ public class AutoRedBottom extends DogeAuto {
             bot.jewelArm.Up();
 
         }
-        new CommandGyroTurn(opMode,0.2,350).Run();
-        new CommandGyroDrive(opMode,0.2,0,6).Run();
-        new CommandGyroTurn(opMode,0.2,0).Run();
+
+        new CommandGyroDrive(opMode,0.2,0,12).Run();
         bot.jewelArm.Up();
-        new CommandWait(opMode, 1.0);
+        new CommandGyroTurn(opMode,0.2,270).Run();
+
+        new CommandWait(opMode, 0.3);
 
         switch(vuMark){
             case RIGHT:
-                new CommandUltrasonicDrive(opMode,0.2,0,48).Run();
+                new CommandUltrasonicDrive(opMode,0.2,0,38).Run();
                 break;
             case CENTER:
-                new CommandUltrasonicDrive(opMode,0.2,0,54).Run();
+                new CommandUltrasonicDrive(opMode,0.2,0,44).Run();
                 break;
             case LEFT:
-                new CommandUltrasonicDrive(opMode,0.2,0,60).Run();
+                new CommandUltrasonicDrive(opMode,0.2,0,50).Run();
                 break;
             case UNKNOWN:
-                new CommandUltrasonicDrive(opMode,0.2,0,54).Run();
+                new CommandUltrasonicDrive(opMode,0.2,0,44).Run();
                 break;
         }
 
 
-        new CommandGyroTurn(opMode, 0.3,90).Run();
-        new CommandGyroDrive(opMode,0.4,90,5).Run();
+        new CommandGyroTurn(opMode, 0.3,0).Run();
+        new CommandGyroDrive(opMode,0.4,0,5).Run();
         bot.grabbers.openGrabbers();
-        new CommandGyroDrive(opMode, 0.3,90, -6).Run();
-        new CommandGyroTurn(opMode, 0.4,270).Run();
-        new CommandLiftToPosition(opMode,bot.lift.minPos).Run();
-        new CommandGyroDrive(opMode,1.0 ,270,36).Run();
-        bot.grabbers.closeGrabbers();
-        new CommandGyroDrive(opMode, 0.5, 270, -24).Run();
-        new CommandGyroTurn(opMode, 0.3, 90).Run();
-        new CommandLiftToPosition(opMode,bot.lift.maxPos - 200).Run();
-        new CommandGyroDrive(opMode, 0.4, 90, 10).Run();
-        new CommandGyroDrive(opMode, 0.2, 90, 5).Run();
-        bot.grabbers.openGrabbers();
-        new CommandGyroDrive(opMode, 0.2, 90, -5);
+        new CommandGyroDrive(opMode, 0.3,0, -6).Run();
+
 
 
 

@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.teleop;
 
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.DcMotor;
 
 import org.firstinspires.ftc.teamcode.lib.control.Controller;
 import org.firstinspires.ftc.teamcode.lib.auto.DogeAutoOpMode;
@@ -20,11 +21,14 @@ public class MainTeleop extends DogeAutoOpMode {
 
         controller1 = new Controller(gamepad1);
         controller2 = new Controller(gamepad2);
+        bot.lift.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        waitForStart();
         while(opModeIsActive()){
             controller1.Update();
             controller2.Update();
 
-
+            telemetry.addData("Distance", bot.distanceDetection.getDistance());
+            telemetry.update();
 
             if(gamepad1.left_trigger > 0.1 || gamepad1.left_bumper){
                 speed = 0.2;
@@ -55,15 +59,12 @@ public class MainTeleop extends DogeAutoOpMode {
             }
 
 
-            bot.lift.liftInput(gamepad2.left_stick_y + gamepad2.right_stick_y, false);
+            bot.lift.liftInput(-gamepad2.left_stick_y , true);
 
             if(controller2.DPadUp == Controller.ButtonState.JUST_PRESSED){
                 bot.lift.resetLift();
             }
 
-            double rawLiftInput = -gamepad2.left_trigger;
-            rawLiftInput += gamepad2.right_trigger;
-            bot.lift.liftInput(rawLiftInput, true);
 
         }
 

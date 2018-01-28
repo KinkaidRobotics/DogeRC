@@ -1,7 +1,6 @@
 package org.firstinspires.ftc.teamcode.hardware.bots;
 
 import com.qualcomm.robotcore.hardware.HardwareMap;
-import com.qualcomm.robotcore.util.Hardware;
 
 import org.firstinspires.ftc.teamcode.hardware.sensors.IMU;
 import org.firstinspires.ftc.teamcode.hardware.subsystems.DistanceDetection;
@@ -15,7 +14,7 @@ import org.firstinspires.ftc.teamcode.hardware.subsystems.PhoneServo;
  * Created by Victo on 1/17/2018.
  */
 
-public class RAWRXDBot extends DogeBot {
+public class Troublesome extends DogeBot {
 
     private String leftDriveFront  = "dl1";
     private String leftDriveRear   = "dl2";
@@ -51,26 +50,26 @@ public class RAWRXDBot extends DogeBot {
 
 
     private String jewelArmName    = "jewel";
-    private double JEWEL_UP = 1.0;
-    private double JEWEL_DOWN = 0;
+    private double JEWEL_UP = 0;
+    private double JEWEL_DOWN = 1.0;
 
 
-    public RAWRXDBot(HardwareMap hwd) {
+    public Troublesome(HardwareMap hwd) {
         super(hwd);
-        P = 0.03;
+        P = 0.01;
         I = 0;
         D = 0;
-        PID_THRESH =1 ;
+        PID_THRESH =1;
        // DRIVE_GEAR_REDUCTION = 0.5;
-        COUNTS_PER_MOTOR_REV =  560;
+        DRIVE_GEAR_REDUCTION = 0.5;
 
         driveFrame         = new DriveFrame(hardwareMap, null, driveMotorNames,true);
         grabbers           = new Grabbers(hardwareMap, grabberNames,grabberOpenPos, grabberSoftPos, grabberClosePos);
-        navigationHardware = new IMU(hardwareMap, "imu");
+      //  navigationHardware = new IMU(hardwareMap, "imu");
         jewelArm           = new JewelArm(hardwareMap, jewelArmName, JEWEL_UP,JEWEL_DOWN);
-        distanceDetection  = new DistanceDetection(hardwareMap, "ultra");
-        lift               = new Lift(hardwareMap, new String[]{"lift1","lift2"}, 0,2500);
-        lift.setReverseMotor(1);
+      //  distanceDetection  = new DistanceDetection(hardwareMap, "ultra");
+        lift               = new Lift(hardwareMap, new String[]{"lift1","lift2"},0,2500);
+        lift.setReverseMotor(0);
         phoneServo         = new PhoneServo(hardwareMap, "phone", new double[]{0.4, 0.9, 1.0});
     }
 

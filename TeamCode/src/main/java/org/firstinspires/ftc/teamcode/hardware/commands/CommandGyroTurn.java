@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.hardware.commands;
 
+import android.sax.TextElementListener;
+
 import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.teamcode.hardware.bots.DogeBot;
@@ -21,14 +23,14 @@ public class CommandGyroTurn extends CommandBase {
         super(opMode);
 
         this.speed = speed;
-        this.angle = angle;
+        this.angle = -angle;
 
         pidController = new PIDController(bot.P, bot.I, bot.D);
     }
 
     @Override
     public void Start() {
-        angle = -angle;
+
     }
 
     @Override
@@ -52,24 +54,25 @@ public class CommandGyroTurn extends CommandBase {
         double rightSpeed;
 
         // determine turn power based on +/- error
-
-        if (Math.abs(heading) <= bot.PID_THRESH) {
+        double finalError = pidController.run((int)angle,heading);
+        if (Math.abs(bot.navigationHardware.getError(angle)) <= bot.PID_THRESH ) {
             steer = 0.0;
             leftSpeed  = 0.0;
             rightSpeed = 0.0;
             onTarget = true;
         }
         else {
-            double finalError = pidController.run((int)angle,heading);
+
             if(opMode != null){
+                opMode.telemetry.addData("Error", Math.abs(angle - heading));
                 opMode.telemetry.addData("Final error" ,finalError);
                 opMode.telemetry.addData("Raw Angle" ,angle);
                 opMode.telemetry.addData("Raw Angle" ,target);
                 opMode.telemetry.update();
             }
             steer = Range.clip(finalError, -1, 1);
-            rightSpeed  = speed * steer;
-            leftSpeed   = -rightSpeed;
+            leftSpeed  = speed * steer;
+            rightSpeed   = -leftSpeed;
         }
 
         bot.driveFrame.setLeftPower(leftSpeed);

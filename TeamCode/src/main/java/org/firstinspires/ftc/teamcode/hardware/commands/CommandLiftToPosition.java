@@ -20,8 +20,9 @@ public class CommandLiftToPosition extends CommandBase {
 
     @Override
     public void Start() {
-        bot.lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         bot.lift.setTarget(position);
+        bot.lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
     }
 
     @Override
@@ -32,6 +33,8 @@ public class CommandLiftToPosition extends CommandBase {
     @Override
     public void Stop() {
         bot.lift.liftInput(0,true);
+
+      //  bot.lift.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
     }
 
     @Override

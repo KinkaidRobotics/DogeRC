@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.hardware.bots;
 
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+import org.firstinspires.ftc.teamcode.hardware.subsystems.DistanceDetection;
 import org.firstinspires.ftc.teamcode.hardware.subsystems.DriveFrame;
 import org.firstinspires.ftc.teamcode.hardware.subsystems.Grabbers;
 import org.firstinspires.ftc.teamcode.hardware.subsystems.JewelArm;
@@ -35,6 +36,7 @@ public abstract class DogeBot {
     public JewelArm jewelArm = null;
     public Lift lift = null;
     public PhoneServo phoneServo = null;
+    public DistanceDetection distanceDetection = null;
 
     public DogeBot(HardwareMap hwd){
         hardwareMap = hwd;
@@ -43,6 +45,9 @@ public abstract class DogeBot {
     public abstract void Init();
 
     public int convertEncoder(double inputInches){
+
+        COUNTS_PER_INCH         = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) /
+                (WHEEL_DIAMETER_INCHES * 3.1415);
         return (int)(inputInches * COUNTS_PER_INCH);
     }
 

@@ -43,13 +43,13 @@ public class DriveFrame {
 
     public boolean isMotorBusy(){
         boolean isBusy = false;
-        for (DcMotor _motor : allMotors){
+       /* for (DcMotor _motor : allMotors){
             if(_motor.isBusy()){
                 isBusy = true;
             }
         }
-
-        return isBusy;
+        */
+        return allMotors[0].isBusy() && allMotors[1].isBusy() && allMotors[2].isBusy() && allMotors[3].isBusy();
     }
 
     public void setMotorModes(DcMotor.RunMode mode){

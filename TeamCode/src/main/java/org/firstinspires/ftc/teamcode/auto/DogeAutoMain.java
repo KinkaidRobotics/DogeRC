@@ -29,9 +29,11 @@ public class DogeAutoMain extends DogeAutoOpMode {
 
         switch(fieldPostion){
             case RED_BOTTOM:
-
+                selectedAuto = new AutoRedBottom(this);
                 break;
-
+            case RED_TOP:
+                selectedAuto = new AutoRedTop(this);
+                break;
             case BLUE_TOP:
                 //selectedAuto = blueTopAuto;
                 break;

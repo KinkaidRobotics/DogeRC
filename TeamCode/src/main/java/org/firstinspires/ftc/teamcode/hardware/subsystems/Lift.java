@@ -14,9 +14,11 @@ public class Lift {
     public int maxPos = 3000;
     public int minPos = 0;
     public Lift(HardwareMap map, String names[], double minPos, double maxPos){
+        liftMotors = new DcMotor[names.length];
         for(int i=0;i<names.length;i++){
             liftMotors[i] = map.dcMotor.get(names[i]);
-            liftMotors[i].setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            liftMotors[i].setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+            liftMotors[i].setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         }
 
         maxPos = maxPos;
@@ -24,8 +26,10 @@ public class Lift {
     }
 
     public Lift(HardwareMap map, String names[]){
+        liftMotors = new DcMotor[names.length];
         for(int i=0;i<names.length;i++){
             liftMotors[i] = map.dcMotor.get(names[i]);
+            liftMotors[i].setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         }
         usingEncoder = false;
     }

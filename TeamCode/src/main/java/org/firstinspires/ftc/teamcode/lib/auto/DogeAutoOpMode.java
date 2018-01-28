@@ -8,6 +8,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.hardware.bots.DogeBot;
 import org.firstinspires.ftc.teamcode.hardware.bots.RAWRXDBot;
+import org.firstinspires.ftc.teamcode.hardware.bots.Troublesome;
 import org.firstinspires.ftc.teamcode.lib.logging.UniLogger;
 
 /**
@@ -43,6 +44,11 @@ public abstract class DogeAutoOpMode extends LinearOpMode {
             case "RAWR-XD":
                 UniLogger.Log("DOGE-AUTO", "Creating RAWR-XD bot for OpModes");
                 bot = new RAWRXDBot(hardwareMap);
+
+                break;
+            case "Troublesome":
+                UniLogger.Log("DOGE-AUTO", "Creating Troubles bot for OpModes");
+                bot = new Troublesome(hardwareMap);
 
                 break;
         }

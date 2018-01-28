@@ -12,32 +12,29 @@ import org.firstinspires.ftc.teamcode.lib.logging.UniLogger;
  * Created by Victo on 1/17/2018.
  */
 
-public class CommandGyroDrive extends CommandBase {
-    private double angle = 0;
+public class CommandEncoderDrive extends CommandBase {
+
     private double speed = 0.5;
-    private double distance = 1000;
-    private PIDController pidController;
+    private double distance = 1;
 
 
     int     newLeftTarget1, newLeftTarget2;
     int     newRightTarget1, newRightTarget2;
     int     moveCounts;
-    double  max;
-    double  error;
-    double  steer;
+
     double  leftSpeed;
     double  rightSpeed;
 
-    public CommandGyroDrive(DogeAutoOpMode opMode, double speed, double angle, double distance) {
+    public CommandEncoderDrive(DogeAutoOpMode opMode, double speed, double distance) {
         super(opMode);
 
         this.speed = speed;
-        this.angle = angle;
+
         this.distance = bot.convertEncoder(distance);
-        pidController = new PIDController(bot.P, bot.I, bot.D);
+
 
         if(bot.driveFrame == null){
-            UniLogger.Log("DOGE-AUTO","Command 'CommandGyroDrive' requires DriveTrain, but it is null");
+            UniLogger.Log("DOGE-AUTO","Command 'CommandEncoderDrive' requires DriveTrain, but it is null");
         }
 
         bot.driveFrame.setMotorModes(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -71,46 +68,11 @@ public class CommandGyroDrive extends CommandBase {
     @Override
     public void Loop() {
 
-        double error = 0.4* bot.navigationHardware.getError(angle);
-        steer = Range.clip(error, -1, 1);
-        if(bot.navigationHardware.getError(angle) < bot.PID_THRESH){
-            steer = 0;
-        }
-        // if driving in reverse, the motor correction also needs to be reversed
-        if (distance < 0)
-            steer *= -1.0;
-
-        leftSpeed = speed - steer;
-        rightSpeed = speed + steer;
-
-        // Normalize speeds if either one exceeds +/- 1.0;
-        max = Math.max(Math.abs(leftSpeed), Math.abs(rightSpeed));
-        if (max > 1.0)
-        {
-            leftSpeed /= max;
-            rightSpeed /= max;
-        }
-        if(leftSpeed < 0){
-            leftSpeed = Range.clip(leftSpeed, -1.0, -0.1);
-        }
-        if(leftSpeed > 0){
-            leftSpeed = Range.clip(leftSpeed, 0.1, 1.0);
-        }
-        if(rightSpeed < 0){
-            rightSpeed = Range.clip(rightSpeed, -1.0, -0.1);
-        }
-        if(rightSpeed > 0){
-            rightSpeed = Range.clip(rightSpeed, 0.1, 1.0);
-        }
-        bot.driveFrame.setLeftPower(leftSpeed);
-        bot.driveFrame.setRightPower(rightSpeed);
+        bot.driveFrame.setLeftPower(speed);
+        bot.driveFrame.setRightPower(speed);
 
         if(opMode != null){
-            opMode.telemetry.addData("ERROR", bot.P * bot.navigationHardware.getError(angle));
-            opMode.telemetry.addData("Raw Target" ,angle);
 
-            opMode.telemetry.addData("STEER", steer);
-            opMode.telemetry.addData("Powers", leftSpeed + "/"+rightSpeed);
             opMode.telemetry.addData("Motor1" , bot.driveFrame.allMotors[0].getCurrentPosition() + " / " + bot.driveFrame.allMotors[0].getTargetPosition());
             opMode.telemetry.addData("Motor2" ,bot.driveFrame.allMotors[1].getCurrentPosition() + " / " + bot.driveFrame.allMotors[1].getTargetPosition());
             opMode.telemetry.addData("Motor3" ,bot.driveFrame.allMotors[2].getCurrentPosition() + " / " + bot.driveFrame.allMotors[2].getTargetPosition());
