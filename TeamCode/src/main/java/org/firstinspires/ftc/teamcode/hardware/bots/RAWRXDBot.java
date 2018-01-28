@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.Hardware;
 
 import org.firstinspires.ftc.teamcode.hardware.sensors.IMU;
+import org.firstinspires.ftc.teamcode.hardware.sensors.MultiIMU;
 import org.firstinspires.ftc.teamcode.hardware.subsystems.DistanceDetection;
 import org.firstinspires.ftc.teamcode.hardware.subsystems.DriveFrame;
 import org.firstinspires.ftc.teamcode.hardware.subsystems.Grabbers;
@@ -66,7 +67,7 @@ public class RAWRXDBot extends DogeBot {
 
         driveFrame         = new DriveFrame(hardwareMap, null, driveMotorNames,true);
         grabbers           = new Grabbers(hardwareMap, grabberNames,grabberOpenPos, grabberSoftPos, grabberClosePos);
-        navigationHardware = new IMU(hardwareMap, "imu");
+        navigationHardware = new MultiIMU(hardwareMap, "imu1", "imu2");
         jewelArm           = new JewelArm(hardwareMap, jewelArmName, JEWEL_UP,JEWEL_DOWN);
         distanceDetection  = new DistanceDetection(hardwareMap, "ultra");
         lift               = new Lift(hardwareMap, new String[]{"lift1","lift2"}, 0,2500);

@@ -21,7 +21,7 @@ public class Concept_EncoderDistance extends DogeAutoOpMode {
         waitForStart();
 
         if (opModeIsActive()){
-            new CommandUltrasonicDrive(this, 0.5, 0, 50).Run();
+            //new CommandUltrasonicDrive(this, 0.5, 0, 50).Run();
             telemetry.addData("TURNING!", "TEAST");
             telemetry.update();
             new CommandGyroTurn(this,0.4,90).Run();

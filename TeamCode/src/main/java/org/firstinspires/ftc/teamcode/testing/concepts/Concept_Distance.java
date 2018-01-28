@@ -24,7 +24,7 @@ public class Concept_Distance extends DogeAutoOpMode {
 
         if (opModeIsActive()){
 
-            new CommandUltrasonicDrive(this, 0.4, 0, 80).Run();
+            //new CommandUltrasonicDrive(this, 0.4, 0, 80).Run();
         }
     }
 }

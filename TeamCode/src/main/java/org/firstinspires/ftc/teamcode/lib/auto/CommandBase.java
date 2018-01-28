@@ -10,6 +10,7 @@ public abstract class CommandBase {
     public DogeBot bot;
     public DogeAutoOpMode opMode;
     public boolean overrideLoop = false;
+    private boolean stopped = false;
     public CommandBase(DogeAutoOpMode opMode){
         this.opMode = opMode;
         this.bot = opMode.bot;
@@ -33,10 +34,12 @@ public abstract class CommandBase {
     }
     public abstract void Start();
     public abstract void Loop();
-    public abstract void Stop();
+    public void Stop(){
+        stopped = true;
+    }
 
     public abstract boolean IsTaskRunning();
     public boolean canRunLoop(){
-        return !opMode.isStopRequested() && opMode.opModeIsActive() && IsTaskRunning();
+        return !opMode.isStopRequested() && opMode.opModeIsActive() && IsTaskRunning() && !stopped;
     }
 }

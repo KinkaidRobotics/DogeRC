@@ -85,23 +85,23 @@ public class AutoRedBottom extends DogeAuto {
 
         }
         new CommandGyroTurn(opMode,0.2,350).Run();
-        new CommandGyroDrive(opMode,0.2,0,6).Run();
+        new CommandGyroDrive(opMode,0.2,0,24).Run();
         new CommandGyroTurn(opMode,0.2,0).Run();
         bot.jewelArm.Up();
         new CommandWait(opMode, 1.0);
 
         switch(vuMark){
             case RIGHT:
-                new CommandUltrasonicDrive(opMode,0.2,0,48).Run();
+                new CommandUltrasonicDrive(opMode,0.2,0,48,4).Run();
                 break;
             case CENTER:
-                new CommandUltrasonicDrive(opMode,0.2,0,54).Run();
+                new CommandUltrasonicDrive(opMode,0.2,0,54, 8).Run();
                 break;
             case LEFT:
-                new CommandUltrasonicDrive(opMode,0.2,0,60).Run();
+                new CommandUltrasonicDrive(opMode,0.2,0,60, 16).Run();
                 break;
             case UNKNOWN:
-                new CommandUltrasonicDrive(opMode,0.2,0,54).Run();
+                new CommandUltrasonicDrive(opMode,0.2,0,54, 24).Run();
                 break;
         }
 

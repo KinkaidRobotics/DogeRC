@@ -38,6 +38,12 @@
             android:label="@string/app_name"
             android:launchMode="singleTask"/>
 
+        <activity
+            android:name="com.qualcomm.ftcrobotcontroller.FieldPositionActivity"
+            android:configChanges="orientation|screenSize"
+            android:label="Fielde"
+            android:launchMode="singleTask"/>
+
         <!-- The robot controller service in which most of the robot functionality is managed -->
         <service
             android:name="com.qualcomm.ftccommon.FtcRobotControllerService"

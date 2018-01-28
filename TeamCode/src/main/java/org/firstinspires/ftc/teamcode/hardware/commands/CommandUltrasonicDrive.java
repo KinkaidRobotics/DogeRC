@@ -18,21 +18,23 @@ public class CommandUltrasonicDrive extends CommandBase {
     private double distance = 12;
     private PIDController pidController;
 
-
-    int newLeftTarget1, newLeftTarget2;
-    int newRightTarget1, newRightTarget2;
-    int moveCounts;
+    int startingPosition = 0;
+    int saftey = 0;
+    int moveCountsAvg;
     double max;
     double error;
     double steer;
     double leftSpeed;
     double rightSpeed;
 
-    public CommandUltrasonicDrive(DogeAutoOpMode opMode, double speed, double angle, double distance) {
+
+
+    public CommandUltrasonicDrive(DogeAutoOpMode opMode, double speed, double angle, double distance, double saftey) {
         super(opMode);
 
         this.speed = speed;
         this.angle = angle;
+        this.saftey = bot.convertEncoder(saftey);
         this.distance = distance;
         pidController = new PIDController(bot.P, bot.I, bot.D);
 
@@ -42,13 +44,14 @@ public class CommandUltrasonicDrive extends CommandBase {
 
         bot.driveFrame.setMotorModes(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
+
     }
 
 
     @Override
     public void Start() {
 
-
+        startingPosition = bot.driveFrame.allMotors[0].getCurrentPosition();
         bot.driveFrame.setMotorModes(DcMotor.RunMode.RUN_USING_ENCODER);
 
 
@@ -56,6 +59,9 @@ public class CommandUltrasonicDrive extends CommandBase {
         speed = Range.clip(Math.abs(speed), 0.0, 1.0);
         bot.driveFrame.setLeftPower(-speed);
         bot.driveFrame.setRightPower(-speed);
+
+
+
     }
 
     @Override
@@ -83,6 +89,12 @@ public class CommandUltrasonicDrive extends CommandBase {
 
             opMode.telemetry.update();
         }
+        moveCountsAvg =bot.driveFrame.allMotors[0].getCurrentPosition();
+
+        if(Math.abs(saftey - moveCountsAvg) < 50){
+            Stop();
+        }
+
     }
 
     @Override
